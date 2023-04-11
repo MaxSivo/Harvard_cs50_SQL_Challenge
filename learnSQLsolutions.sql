@@ -374,7 +374,7 @@ SELECT
     else 'No'
   end as has_insurance,
   case
-  	when patient_id % 2 = 0 then count(*) * 10
+    when patient_id % 2 = 0 then count(*) * 10
     else count(*) * 50
   end as total_cost
 from admissions
@@ -388,7 +388,7 @@ INNER JOIN patients pa
     ON pa.province_id = pr.province_id
 GROUP BY pr.province_name
 having 
-	count(case when gender = 'M' then 1 end) > 
+    count(case when gender = 'M' then 1 end) > 
   count(case when gender = 'F' then 1 end)
   
 -- We are looking for a specific patient. Pull all columns for the patient who matches the following criteria:
@@ -427,7 +427,7 @@ group by admission_date
 -- Sort the province names in ascending order in such a way that the province 'Ontario' is always on top.
 
 SELECT 
-	province_name
+    province_name
 from province_names
 order by 
 case
