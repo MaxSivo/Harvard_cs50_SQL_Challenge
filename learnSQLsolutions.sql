@@ -313,7 +313,7 @@ having COUNT(concat(first_name, ' ', last_name)) > 1
 -- Convert KG to pounds by multiplying by 2.205.
 
 SELECT 
-	concat(first_name, ' ', last_name) as full_name,
+    concat(first_name, ' ', last_name) as full_name,
     ROUND(height / 30.48, 1) as height,
     ROUND(weight * 2.205, 0) as height,
     birth_date,
@@ -408,4 +408,30 @@ and patient_id % 2 != 0
 and city = 'Kingston'
 and month(birth_date) in (2, 5, 12)
 
+-- Show the percent of patients that have 'M' as their gender. Round the answer to the nearest hundreth number and in percent form.
 
+SELECT concat(round(sum(gender = 'M') * 100.00 / count(*), 2), '%') 
+  as percent_male
+FROM patients;
+
+-- For each day display the total amount of admissions on that day. Display the amount changed from the previous date.
+
+SELECT
+  admission_date,
+  count(admission_date),
+  count(admission_date) - LAG(count(admission_date)) 
+  OVER(order by admission_date) as change
+FROM admissions
+group by admission_date 
+
+-- Sort the province names in ascending order in such a way that the province 'Ontario' is always on top.
+
+SELECT 
+	province_name
+from province_names
+order by 
+case
+    when province_name = 'Ontario' then 0
+    else 1
+    end,
+province_name
